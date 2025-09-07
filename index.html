@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ridhima Library - Student Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .logo p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3') center/cover no-repeat;
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #4a6491;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #2c3e50;
+        }
+        
+        .features {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #4a6491;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .management-section {
+            background: white;
+            padding: 60px 0;
+        }
+        
+        .management-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .option-card {
+            background: #f8f9fa;
+            border-left: 4px solid #4a6491;
+            padding: 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .option-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .option-card ul {
+            list-style: none;
+            margin-left: 10px;
+        }
+        
+        .option-card ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option-card ul li i {
+            color: #4a6491;
+            margin-right: 10px;
+        }
+        
+        /* Page Content Styles */
+        .page-content {
+            display: none;
+            padding: 40px 0;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        /* Data Entry Form Styles */
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        /* Student Records Table */
+        .records-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .records-table th,
+        .records-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .records-table th {
+            background-color: #4a6491;
+            color: white;
+        }
+        
+        .records-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        /* Payment Section */
+        .payment-details {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .payment-details h4 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .contact-info {
+            margin: 20px 0;
+        }
+        
+        .social-links {
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 20px;
+            }
+            
+            nav {
+                width: 100%;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                margin-top: 15px;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .records-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo i {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .form-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <div>
+                    <h1>Ridhima Library</h1>
+                    <p>Budh Bihar Colony, Saidnagar, Darbhanga</p>
+                </div>
+            </div>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="#features" class="nav-link" data-page="features">Features</a></li>
+                    <li><a href="#management" class="nav-link" data-page="management">Management</a></li>
+                    <li><a href="#data-entry" class="nav-link" data-page="data-entry">Fee Payments</a></li>
+                    <li><a href="#new-admission" class="nav-link" data-page="new-admission">New Admission</a></li>
+                    <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home-page" class="page-content active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h2>Welcome to Ridhima Library Management System</h2>
+                <p>Efficiently manage student data, admissions, and fee payments all in one place</p>
+                <a href="#data-entry" class="btn nav-link" data-page="data-entry">Fee Payments</a>
+                <a href="#new-admission" class="btn btn-success nav-link" data-page="new-admission" style="margin-left: 10px;">New Admission</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Our Management Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-user-graduate"></i>
+                        <h3>Student Admissions</h3>
+                        <p>Easily register new students with complete details including contact information and admission date.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h3>Fee Management</h3>
+                        <p>Track fee payments, generate receipts, and send reminders for pending payments automatically.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-database"></i>
+                        <h3>Data Management</h3>
+                        <p>Maintain organized records of all students with search, filter, and update capabilities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Management Section -->
+        <section class="management-section">
+            <div class="container">
+                <h2 class="section-title">Student Management Options</h2>
+                <div class="management-options">
+                    <div class="option-card" data-page="new-admission">
+                        <h3>Admission Management</h3>
+                        <ul>
+                            <li><i class="fas fa-plus-circle"></i> New Admissions</li>
+                            <li><i class="fas fa-edit"></i> Update Student Details</li>
+                            <li><i class="fas fa-search"></i> Find Student Records</li>
+                            <li><i class="fas fa-history"></i> Admission History</li>
+                        </ul>
+                    </div>
+                    <div class="option-card" data-page="data-entry">
+                        <h3>Fee Management</h3>
+                        <ul>
+                            <li><i class="fas fa-money-check"></i> Fee Payment Processing</li>
+                            <li><i class="fas fa-receipt"></i> Generate Payment Receipts</li>
+                            <li><i class="fas fa-clock"></i> Payment History</li>
+                            <li><i class="fas fa-bell"></i> Payment Reminders</li>
+                        </ul>
+                    </div>
+                    <div class="option-card">
+                        <h3>Reporting</h3>
+                        <ul>
+                            <li><i class="fas fa-chart-bar"></i> Monthly Reports</li>
+                            <li><i class="fas fa-file-invoice"></i> Fee Collection Reports</li>
+                            <li><i class="fas fa-user-friends"></i> Student Strength Reports</li>
+                            <li><i class="fas fa-download"></i> Export Data</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Data Entry Page -->
+    <section id="data-entry-page" class="page-content">
+        <div class="container">
+            <h2 class="section-title">Fee Payment Management</h2>
+            <div class="form-container">
+                <h3 class="form-title">Fee Payment Entry</h3>
+                <form id="paymentForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentId">Student ID *</label>
+                            <input type="text" id="studentId" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentName">Student Name *</label>
+                            <input type="text" id="studentName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymentMonth">Payment For Month *</label>
+                            <select id="paymentMonth" required>
+                                <option value="">Select Month</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentYear">Payment Year *</label>
+                            <select id="paymentYear" required>
+                                <option value="">Select Year</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="feeAmount">Fee Amount (₹) *</label>
+                            <input type="number" id="feeAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentDate">Payment Date *</label>
+                            <input type="date" id="paymentDate" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method *</label>
+                            <select id="paymentMethod" required>
+                                <option value="">Select Method</option>
+                                <option value="Cash">Cash</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="transactionId">Transaction ID (if online)</label>
+                            <input type="text" id="transactionId">
+                        </div>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="submit" class="btn">Record Payment</button>
+                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                    </div>
+                </form>
+                
+                <h3 style="margin-top: 40px; margin-bottom: 20px;">Payment Records</h3>
+                <table class="records-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Month</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Method</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentRecords">
+                        <!-- Payment records will be loaded from localStorage -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Admission Page -->
+    <section id="new-admission-page" class="page-content">
+        <div class="container">
+            <h2 class="section-title">New Student Admission</h2>
+            <div class="form-container">
+                <h3 class="form-title">Student Registration Form</h3>
+                <form id="admissionForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newStudentName">Full Name *</label>
+                            <input type="text" id="newStudentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newFatherName">Father's Name *</label>
+                            <input type="text" id="newFatherName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newPhone">Phone Number *</label>
+                            <input type="tel" id="newPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newEmail">Email Address</label>
+                            <input type="email" id="newEmail">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newAddress">Address *</label>
+                            <textarea id="newAddress" rows="2" required></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newAdmissionDate">Admission Date *</label>
+                            <input type="date" id="newAdmissionDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newFeeAmount">Monthly Fee Amount (₹) *</label>
+                            <input type="number" id="newFeeAmount" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newFeeStatus">Initial Fee Status *</label>
+                            <select id="newFeeStatus" required>
+                                <option value="Paid">Paid</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-details" id="initialPaymentSection">
+                        <h4>Initial Payment Details</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="initialPaymentDate">Payment Date</label>
+                                <input type="date" id="initialPaymentDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="initialPaymentMethod">Payment Method</label>
+                                <select id="initialPaymentMethod">
+                                    <option value="">Select Method</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="submit" class="btn">Complete Admission</button>
+                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                    </div>
+                </form>
+                
+                <h3 style="margin-top: 40px; margin-bottom: 20px;">Student Records</h3>
+                <table class="records-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Admission Date</th>
+                            <th>Fee Status</th>
+                            <th>Monthly Fee</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admissionRecords">
+                        <!-- Admission records will be loaded from localStorage -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact-page" class="page-content">
+        <footer>
+            <div class="container footer-content">
+                <h2>Ridhima Library</h2>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Budh Bihar Colony, Saidnagar, Darbhanga</p>
+                    <p><i class="fas fa-phone"></i> +91 XXXXX XXXXX</p>
+                    <p><i class="fas fa-envelope"></i> info@ridhimalibrary.com</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p>&copy; 2023 Ridhima Library. All rights reserved.</p>
+            </div>
+        </footer>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // Page navigation
+        const pageContents = document.querySelectorAll('.page-content');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const optionCards = document.querySelectorAll('.option-card');
+        
+        function showPage(pageId) {
+            pageContents.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(`${pageId}-page`).classList.add('active');
+            
+            // Update URL hash
+            window.location.hash = pageId;
+            
+            // Close mobile menu after clicking a link
+            if (window.innerWidth < 768) {
+                mainNav.classList.remove('active');
+            }
+            
+            // Load data when switching to pages with tables
+            if (pageId === 'data-entry') {
+                loadPaymentRecords();
+            } else if (pageId === 'new-admission') {
+                loadAdmissionRecords();
+            }
+        }
+        
+        // Add event listeners to navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+        
+        // Add event listeners to option cards
+        optionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const pageId = card.getAttribute('data-page');
+                if (pageId) {
+                    showPage(pageId);
+                }
+            });
+        });
+        
+        // Check URL hash on page load
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(`${hash}-page`)) {
+                showPage(hash);
+            } else {
+                showPage('home');
+            }
+            
+            // Load initial data
+            loadPaymentRecords();
+            loadAdmissionRecords();
+        });
+        
+        // Data storage functions
+        function getPaymentRecords() {
+            const records = localStorage.getItem('paymentRecords');
+            return records ? JSON.parse(records) : [];
+        }
+        
+        function savePaymentRecord(record) {
+            const records = getPaymentRecords();
+            record.id = Date.now(); // Add unique ID
+            records.push(record);
+            localStorage.setItem('paymentRecords', JSON.stringify(records));
+            return record;
+        }
+        
+        function deletePaymentRecord(id) {
+            let records = getPaymentRecords();
+            records = records.filter(record => record.id !== id);
+            localStorage.setItem('paymentRecords', JSON.stringify(records));
+            loadPaymentRecords();
+        }
+        
+        function getAdmissionRecords() {
+            const records = localStorage.getItem('admissionRecords');
+            return records ? JSON.parse(records) : [];
+        }
+        
+        function saveAdmissionRecord(record) {
+            const records = getAdmissionRecords();
+            record.id = Date.now(); // Add unique ID
+            records.push(record);
+            localStorage.setItem('admissionRecords', JSON.stringify(records));
+            return record;
+        }
+        
+        function deleteAdmissionRecord(id) {
+            let records = getAdmissionRecords();
+            records = records.filter(record => record.id !== id);
+            localStorage.setItem('admissionRecords', JSON.stringify(records));
+            loadAdmissionRecords();
+        }
+        
+        // Load data functions
+        function loadPaymentRecords() {
+            const records = getPaymentRecords();
+            const tableBody = document.getElementById('paymentRecords');
+            tableBody.innerHTML = '';
+            
+            if (records.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No payment records found</td></tr>';
+                return;
+            }
+            
+            records.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.studentId}</td>
+                    <td>${record.studentName}</td>
+                    <td>${record.paymentMonth} ${record.paymentYear}</td>
+                    <td>₹${record.feeAmount}</td>
+                    <td>${record.paymentDate}</td>
+                    <td>${record.paymentMethod}</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm" onclick="generateReceipt(${record.id})">Receipt</button>
+                        <button class="btn btn-sm btn-danger" onclick="deletePaymentRecord(${record.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        function loadAdmissionRecords() {
+            const records = getAdmissionRecords();
+            const tableBody = document.getElementById('admissionRecords');
+            tableBody.innerHTML = '';
+            
+            if (records.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No student records found</td></tr>';
+                return;
+            }
+            
+            records.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.studentId}</td>
+                    <td>${record.studentName}</td>
+                    <td>${record.admissionDate}</td>
+                    <td>${record.feeStatus}</td>
+                    <td>₹${record.feeAmount}</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm" onclick="viewStudentProfile(${record.id})">Profile</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteAdmissionRecord(${record.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Form submission handling for payment form
+        const paymentForm = document.getElementById('paymentForm');
+        
+        paymentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const paymentRecord = {
+                studentId: document.getElementById('studentId').value,
+                studentName: document.getElementById('studentName').value,
+                paymentMonth: document.getElementById('paymentMonth').value,
+                paymentYear: document.getElementById('paymentYear').value,
+                feeAmount: document.getElementById('feeAmount').value,
+                paymentDate: document.getElementById('paymentDate').value,
+                paymentMethod: document.getElementById('paymentMethod').value,
+                transactionId: document.getElementById('transactionId').value
+            };
+            
+            // Save to localStorage
+            savePaymentRecord(paymentRecord);
+            
+            // Reset form
+            paymentForm.reset();
+            
+            // Reload table
+            loadPaymentRecords();
+            
+            // Show success message
+            alert('Payment recorded successfully!');
+        });
+        
+        // Form submission handling for admission form
+        const admissionForm = document.getElementById('admissionForm');
+        
+        admissionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Generate student ID
+            const studentId = 'LIB' + new Date().getFullYear() + (Math.floor(Math.random() * 900) + 100);
+            
+            // Get form values
+            const admissionRecord = {
+                studentId: studentId,
+                studentName: document.getElementById('newStudentName').value,
+                fatherName: document.getElementById('newFatherName').value,
+                phone: document.getElementById('newPhone').value,
+                email: document.getElementById('newEmail').value,
+                address: document.getElementById('newAddress').value,
+                admissionDate: document.getElementById('newAdmissionDate').value,
+                feeAmount: document.getElementById('newFeeAmount').value,
+                feeStatus: document.getElementById('newFeeStatus').value,
+                paymentDate: document.getElementById('initialPaymentDate').value,
+                paymentMethod: document.getElementById('initialPaymentMethod').value
+            };
+            
+            // Save to localStorage
+            saveAdmissionRecord(admissionRecord);
+            
+            // Reset form
+            admissionForm.reset();
+            
+            // Reload table
+            loadAdmissionRecords();
+            
+            // Show success message with student ID
+            alert(`Student admission completed successfully!\nStudent ID: ${studentId}`);
+        });
+        
+        // Toggle initial payment section based on fee status
+        const feeStatusSelect = document.getElementById('newFeeStatus');
+        const initialPaymentSection = document.getElementById('initialPaymentSection');
+        
+        feeStatusSelect.addEventListener('change', function() {
+            if (this.value === 'Paid') {
+                initialPaymentSection.style.display = 'block';
+            } else {
+                initialPaymentSection.style.display = 'none';
+            }
+        });
+        
+        // Initialize payment section visibility
+        window.addEventListener('load', function() {
+            if (feeStatusSelect.value === 'Paid') {
+                initialPaymentSection.style.display = 'block';
+            } else {
+                initialPaymentSection.style.display = 'none';
+            }
+        });
+        
+        // Additional functions
+        function generateReceipt(paymentId) {
+            const records = getPaymentRecords();
+            const record = records.find(r => r.id === paymentId);
+            if (record) {
+                alert(`Receipt for ${record.studentName}\nAmount: ₹${record.feeAmount}\nDate: ${record.paymentDate}\nMonth: ${record.paymentMonth} ${record.paymentYear}`);
+            }
+        }
+        
+        function viewStudentProfile(studentId) {
+            const records = getAdmissionRecords();
+            const record = records.find(r => r.id === studentId);
+            if (record) {
+                alert(`Student Profile:\nName: ${record.studentName}\nStudent ID: ${record.studentId}\nAdmission Date: ${record.admissionDate}\nFee Status: ${record.feeStatus}`);
+            }
+        }
+        
+        // Responsive adjustments on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                mainNav.classList.remove('active');
+            }
+        });
+    </script>
+    
+</body>
+</html>
